@@ -3,6 +3,7 @@ package com.telstra.codechallenge.ServiceImpl;
 
 import com.telstra.codechallenge.Constants.Constants;
 import com.telstra.codechallenge.DTO.Items;
+import com.telstra.codechallenge.DTO.UserInformation;
 import com.telstra.codechallenge.ExceptionHandling.ExceptionClass;
 import com.telstra.codechallenge.Service.GitUsersService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,12 +31,12 @@ public class GitUsersServiceImpl implements GitUsersService {
     @Override
     public List<Items> getUsersInfo(Integer number) {
         log.info("Inside GitUsersServiceImpl.getUsersInfo with number value : {}", number);
-        List<Items> items = webServiceClient.getUsersData();
-        if (!items.isEmpty()) {
+        UserInformation userInformation = webServiceClient.getUsersData();
+        if (!userInformation.getItems().isEmpty()) {
             log.info("Inside if block to check whether the items list is empty");
-            if (number <= items.size()) {
+            if (number <= userInformation.getItems().size()) {
                 log.info("Inside if block number is <= item list size and returned the list successfully ");
-                return items.stream().limit(number).collect(Collectors.toList());
+                return userInformation.getItems().stream().limit(number).collect(Collectors.toList());
             } else {
                 log.info("An exception occurred given number is > item list size");
                 throw new ExceptionClass(Constants.ERROR_CODE1, Constants.Error_RESPONSE_NUMBER, HttpStatus.NOT_FOUND);
