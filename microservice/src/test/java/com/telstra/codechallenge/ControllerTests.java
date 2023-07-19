@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebMvcTest(value = GitUserController.class,excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@WebMvcTest(value = GitUserController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 public class ControllerTests {
     @MockBean
     GitUsersService gitUsersService;
