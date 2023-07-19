@@ -1,6 +1,7 @@
 package com.telstra.codechallenge;
 
 import com.telstra.codechallenge.DTO.Items;
+import com.telstra.codechallenge.DTO.UserInformation;
 import com.telstra.codechallenge.ServiceImpl.GitUsersServiceImpl;
 import com.telstra.codechallenge.ServiceImpl.WebServiceClient;
 import org.junit.jupiter.api.Test;
@@ -35,13 +36,15 @@ public class ServiceTests {
     @Test
     public void getUsersInfo() {
         Integer number = 1;
+        UserInformation userInformation = new UserInformation();
         Items items = new Items();
         List<Items> itemsList = new ArrayList<>();
         items.setId(3);
         items.setLogin("mattetti");
         items.setHtml_url("https://github.com/mattetti");
         itemsList.add(items);
-        Mockito.when(webServiceClient.getUsersData()).thenReturn(itemsList);
+        userInformation.setItems(itemsList);
+        Mockito.when(webServiceClient.getUsersData()).thenReturn(userInformation);
         List<Items> itemsList1 = gitUsersServiceimpl.getUsersInfo(number);
         assertNotNull(itemsList1);
 
@@ -51,12 +54,14 @@ public class ServiceTests {
     public void getUsersInfoInvalidNumber() {
         Integer number = 2;
         Items items = new Items();
+        UserInformation userInformation = new UserInformation();
         List<Items> itemsList = new ArrayList<>();
         items.setId(3);
         items.setLogin("mattetti");
         items.setHtml_url("https://github.com/mattetti");
         itemsList.add(items);
-        Mockito.when(webServiceClient.getUsersData()).thenReturn(itemsList);
+        userInformation.setItems(itemsList);
+        Mockito.when(webServiceClient.getUsersData()).thenReturn(userInformation);
         assertThrows(Exception.class, () -> gitUsersServiceimpl.getUsersInfo(number));
 
     }
@@ -65,7 +70,9 @@ public class ServiceTests {
     public void getUsersInfoEmptyItems() {
         Integer number = 2;
         List<Items> itemsList = new ArrayList<>();
-        Mockito.when(webServiceClient.getUsersData()).thenReturn(itemsList);
+        UserInformation userInformation = new UserInformation();
+        userInformation.setItems(itemsList);
+        Mockito.when(webServiceClient.getUsersData()).thenReturn(userInformation);
         assertThrows(Exception.class, () -> gitUsersServiceimpl.getUsersInfo(number));
 
     }
