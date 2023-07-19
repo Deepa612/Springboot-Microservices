@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -42,9 +43,9 @@ class MicroserviceApplicationTests {
                 .getForEntity(new URL("http://localhost:" + port + "/actuator/info")
                         .toString(), Object.class);
         System.out.println("response: " + response);
-//        assertEquals("{\"status\":\"UP\"}", response
-//                .getBody());
-    }
+        assertNotNull(response);
 
+
+    }
 }
 
