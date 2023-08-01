@@ -23,7 +23,6 @@ public class WebServiceClient {
     /**
      * This method is used to call GitHub external api to find the
      * oldest accounts in GitHubRepository with Zero followers
-     *
      * @return List<Items>
      */
     public UserInformation getUsersData() {
