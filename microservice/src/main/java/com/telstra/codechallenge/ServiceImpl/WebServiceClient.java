@@ -1,8 +1,8 @@
-package com.telstra.codechallenge.serviceimpl;
+package com.telstra.codechallenge.ServiceImpl;
 
-import com.telstra.codechallenge.constants.ErrorConstants;
-import com.telstra.codechallenge.exceptionhandling.ExceptionClass;
-import com.telstra.codechallenge.responsedto.UserInformation;
+import com.telstra.codechallenge.Constants.Constants;
+import com.telstra.codechallenge.DTO.UserInformation;
+import com.telstra.codechallenge.ExceptionHandling.ExceptionClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,10 +17,8 @@ import org.springframework.web.client.RestTemplate;
 public class WebServiceClient {
     @Autowired
     RestTemplate restTemplate;
-    @Value("${gitHub.base.url}")
-    private String baseurl;
     @Value("${zero.followers.url}")
-    private String sortingUrl;
+    private String url;
 
     /**
      * This method is used to call GitHub external api to find the
@@ -29,26 +27,26 @@ public class WebServiceClient {
      * @return List<Items>
      */
     public UserInformation getUsersData() {
-        log.info("Checking WebServiceClient.getUsersInfo() method");
+        log.info("Inside WebServiceClient.getUsersInfo");
         UserInformation userInformation = new UserInformation();
         try {
-            log.info("Inside try block to call external api URL: {}", baseurl + sortingUrl);
-            ResponseEntity<UserInformation> response = restTemplate.getForEntity(baseurl + sortingUrl
+            log.info("Inside try block to call external api");
+            ResponseEntity<UserInformation> response = restTemplate.getForEntity(url
                     , UserInformation.class);
             userInformation = response.getBody();
             log.info("outside of try block");
         } catch (RuntimeException ex) {
-            log.info("Runtime exception occurred", ex.getMessage());
+            log.info("Inside catch block to call external api");
             if (ex instanceof HttpClientErrorException.UnprocessableEntity) {
-                log.info("HttpClientErrorException.UnProcessableEntity exception occurred");
-                throw new ExceptionClass(ErrorConstants.ERROR_CODE_3, ErrorConstants.ERROR_RESPONSE_422, HttpStatus.UNPROCESSABLE_ENTITY);
+                log.info("HttpClientErrorException.UnprocessableEntity exception occurred");
+                throw new ExceptionClass(Constants.ERROR_CODE3, Constants.Error_RESPONSE422, HttpStatus.UNPROCESSABLE_ENTITY);
             }
             if (ex instanceof HttpClientErrorException) {
                 log.info("HttpClientErrorException occurred");
-                throw new ExceptionClass(ErrorConstants.ERROR_CODE_1, ErrorConstants.ERROR_RESPONSE_404, HttpStatus.NOT_FOUND);
+                throw new ExceptionClass(Constants.ERROR_CODE1, Constants.Error_RESPONSE404, HttpStatus.NOT_FOUND);
             }
         }
-        log.info("End of WebServiceClient.getUsersInfo()");
+        log.info("Outside WebServiceClient.getUsersInfo");
         return userInformation;
     }
 }

@@ -6,7 +6,7 @@ public class FunctionalTestRunner {
 
     @Karate.Test
     Karate testControllers() {
-        return Karate.run("gitHubUsers").relativeTo(getClass());
+        return Karate.run("gitUsers").relativeTo(getClass());
     }
 
     @Karate.Test

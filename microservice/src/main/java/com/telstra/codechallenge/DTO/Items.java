@@ -1,4 +1,4 @@
-package com.telstra.codechallenge.responsedto;
+package com.telstra.codechallenge.DTO;
 
 import lombok.Data;
 

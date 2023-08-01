@@ -5,7 +5,7 @@ Feature: As an api user I want to retrieve 0 followers oldest accounts
 
   Scenario: Get 0 followers oldest accounts
     Given url microserviceUrl
-    And path 'v1/zero-followers/userAccounts/2'
+    And path '/retrieve/users/2/info'
     When method GET
     Then status 200
     And match header Content-Type contains 'application/json'
