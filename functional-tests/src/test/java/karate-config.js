@@ -1,6 +1,5 @@
 function fn() {
-  // See https://github.com/intuit/karate#karate-configjs for information on
-  // this file.
+  // See https://github.com/intuit/karate#karate-configjs for information on this file.
 
   karate.configure("connectTimeout", 5000);
   karate.configure("readTimeout", 5000);

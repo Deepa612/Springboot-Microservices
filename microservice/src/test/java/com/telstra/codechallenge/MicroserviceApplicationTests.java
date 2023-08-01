@@ -24,10 +24,6 @@ class MicroserviceApplicationTests {
     private TestRestTemplate restTemplate;
 
     @Test
-    void contextLoads() {
-    }
-
-    @Test
     void testHealth() throws RestClientException, MalformedURLException {
         ResponseEntity<String> response = restTemplate
                 .getForEntity(new URL("http://localhost:" + port + "/actuator/health")

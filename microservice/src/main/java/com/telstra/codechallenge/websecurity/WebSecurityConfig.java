@@ -1,4 +1,4 @@
-package com.telstra.codechallenge;
+package com.telstra.codechallenge.websecurity;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

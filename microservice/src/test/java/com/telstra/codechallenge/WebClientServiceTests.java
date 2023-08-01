@@ -1,11 +1,12 @@
 package com.telstra.codechallenge;
 
 
-import com.telstra.codechallenge.Constants.Constants;
-import com.telstra.codechallenge.DTO.Items;
-import com.telstra.codechallenge.DTO.UserInformation;
-import com.telstra.codechallenge.ExceptionHandling.ExceptionClass;
-import com.telstra.codechallenge.ServiceImpl.WebServiceClient;
+import com.telstra.codechallenge.constants.ErrorConstants;
+import com.telstra.codechallenge.exceptionhandling.ExceptionClass;
+import com.telstra.codechallenge.responsedto.Items;
+import com.telstra.codechallenge.responsedto.UserInformation;
+import com.telstra.codechallenge.serviceimpl.WebServiceClient;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,18 +19,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class WebClientServiceTests {
+class WebClientServiceTests {
 
     @InjectMocks
     WebServiceClient webServiceClient;
@@ -40,7 +42,7 @@ public class WebClientServiceTests {
     private String url;
 
     @Test
-    public void getUsersInfo() {
+    void getUsersInfo() {
         UserInformation userInformation = new UserInformation();
         List<Items> itemsList = new ArrayList<>();
         Items items = new Items();
@@ -55,16 +57,17 @@ public class WebClientServiceTests {
     }
 
     @Test()
-    public void getUsersInfoInvalidParameterValueException() {
-        Mockito.when(webServiceClient.getUsersData()).thenThrow(new ExceptionClass(Constants.ERROR_CODE3, Constants.Error_RESPONSE422, HttpStatus.UNPROCESSABLE_ENTITY));
+    void getUsersInfoInvalidParameterValueException() {
+        Mockito.when(webServiceClient.getUsersData()).thenThrow(new ExceptionClass(ErrorConstants.ERROR_CODE_3, ErrorConstants.ERROR_RESPONSE_422, HttpStatus.UNPROCESSABLE_ENTITY));
 
     }
 
     @Test()
-    public void getUsersInfoInvalidURLException() {
-        Mockito.when(webServiceClient.getUsersData()).thenThrow(new ExceptionClass(Constants.ERROR_CODE1, Constants.Error_RESPONSE404, HttpStatus.NOT_FOUND));
+    void getUsersInfoInvalidURLException() {
+        Mockito.when(webServiceClient.getUsersData()).thenThrow(new ExceptionClass(ErrorConstants.ERROR_CODE_1, ErrorConstants.ERROR_RESPONSE_404, HttpStatus.NOT_FOUND));
 
     }
+
 
 
 }

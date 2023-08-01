@@ -1,4 +1,4 @@
-package com.telstra.codechallenge.DTO;
+package com.telstra.codechallenge.responsedto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

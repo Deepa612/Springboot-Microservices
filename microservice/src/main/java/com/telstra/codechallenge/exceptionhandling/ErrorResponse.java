@@ -1,4 +1,4 @@
-package com.telstra.codechallenge.ExceptionHandling;
+package com.telstra.codechallenge.exceptionhandling;
 
 import lombok.Data;
 

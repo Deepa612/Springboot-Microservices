@@ -3,9 +3,9 @@ package com.telstra.codechallenge;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.telstra.codechallenge.Controllers.GitUserController;
-import com.telstra.codechallenge.DTO.Items;
-import com.telstra.codechallenge.Service.GitUsersService;
+import com.telstra.codechallenge.controllers.GitHubUserController;
+import com.telstra.codechallenge.responsedto.Items;
+import com.telstra.codechallenge.service.GitHubUsersService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -22,18 +22,18 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebMvcTest(value = GitUserController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
-public class ControllerTests {
+@WebMvcTest(value = GitHubUserController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+class ControllerTests {
     @MockBean
-    GitUsersService gitUsersService;
+    GitHubUsersService gitUsersService;
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void getUsersInfoTest() throws Exception {
+    void getUsersInfoTest() throws Exception {
         Integer number = 1;
-        String URI = "/retrieve/users/1/info";
+        String URI = "/v1/zero-followers/userAccounts/1";
         Items items = new Items();
         List<Items> itemsList = new ArrayList<>();
         items.setId(3);
@@ -41,7 +41,7 @@ public class ControllerTests {
         items.setHtml_url("https://github.com/mattetti");
         itemsList.add(items);
         Mockito.when(gitUsersService.getUsersInfo(number)).thenReturn(itemsList);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(URI).param("number", String.valueOf(1)).accept(MediaType.APPLICATION_JSON);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(URI).param("limit", String.valueOf(1)).accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         String expectedValue = this.mapToJson(itemsList);
         String response = result.getResponse().getContentAsString();
